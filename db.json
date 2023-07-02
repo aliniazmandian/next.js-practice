@@ -1,19 +1,29 @@
 {
-  "posts": [
+  "products": [
     {
       "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
+      "title": "product 1",
+      "price": 3000 ,
+      "description": "desceription 1"
+    },
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "id": 2,
+      "title": "product 2",
+      "price": 28000 ,
+      "description": "desceription 2"
+    },
+    {
+      "id": 3,
+      "title": "product 3",
+      "price": 39000 ,
+      "description": "desceription 3"
+    },
+    {
+      "id": 4,
+      "title": "product 4",
+      "price": 34000 ,
+      "description": "desceription 4"
     }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+    
+  ]
 }
