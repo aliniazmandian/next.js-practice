@@ -1,7 +1,12 @@
 import '../styles/globals.css'
+import * as React from 'react';
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+
+export default function MyApp(props) {
+  const { Component, pageProps } = props;
+
+  return (
+        <Component {...pageProps} />
+  );
 }
 
-export default MyApp
