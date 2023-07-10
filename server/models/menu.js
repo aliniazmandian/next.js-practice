@@ -3,14 +3,14 @@ import mongoose from "mongoose";
 
 const menuSchema = new mongoose.Schema({
     title : {
-        type : string ,
+        type : String ,
         unique :true ,
         required : true
     },
     description : {
-        type:string ,
+        type:String ,
         required:true,
     },
 });
 
-export default mongoose.model("Menu",menuSchema)
+export default mongoose.models.Menu ||  mongoose.model("Menu",menuSchema)

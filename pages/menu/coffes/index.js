@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import DeleteSVG from "../../components/deleteSVG";
-import  EditSVG  from "../../components/editSVG";
+import DeleteSVG from "../../../components/deleteSVG";
+import  EditSVG  from "../../../components/editSVG";
+
+import React from 'react'
 
 
-
-export default function coffes  ()  { 
-
+ const Coffes = () => {
     const [data,setData] = useState()
     const [isLoading,setIsloading] = useState(true)
 
@@ -60,4 +60,5 @@ axios.delete(`/api/coffes/${id}`).then((res)=>{
         </div> 
      );
 }
- 
+    
+export default Coffes
