@@ -7,10 +7,7 @@ const menuSchema = new mongoose.Schema({
         unique :true ,
         required : true
     },
-    description : {
-        type:String ,
-        required:true,
-    },
+
 });
 
 export default mongoose.models.Menu ||  mongoose.model("Menu",menuSchema)
