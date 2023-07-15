@@ -11,7 +11,7 @@ import React from 'react'
     const [isLoading,setIsloading] = useState(true)
 
 useEffect(()=>{
-   axios.get("/api/coffes")
+   axios.get("/api/menu")
    .then((res)=>{ 
     setData(res.data)
     setIsloading(false)

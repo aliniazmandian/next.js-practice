@@ -1,6 +1,6 @@
 
 
-import { coffes } from "../../../data/coffes"
+
 import dbConnect from "../../../server/utils/dbConnect"
 import Menu from "../../../server/models/menu"
 
