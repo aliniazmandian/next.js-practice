@@ -4,9 +4,12 @@
 import dbConnect from "../../../server/utils/dbConnect"
 import Menu from "../../../server/models/menu"
 
-dbConnect()
+
 
 export default async function handler(req, res) {
+
+  dbConnect()
+  
   if (req.method === 'POST'){
     // const newItem ={
     //     id:Date.now(),

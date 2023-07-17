@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@coreui/react": "^5.0.0-alpha.0",
     "axios": "^1.4.0",
     "mongoos": "^0.0.1-security",
     "mongoose": "^7.3.2",
