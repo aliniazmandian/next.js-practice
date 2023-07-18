@@ -9,6 +9,7 @@ import {
 } from 'react-accessible-accordion';
 import DeleteSVG from "../components/deleteSVG";
 import EditSVG from "../components/editSVG";
+import axios from "axios";
 
 
 
@@ -17,19 +18,38 @@ export default function Home() {
   
   
 
-  const [data,setData] = useState()
+  const [data,setData] = useState('')
   const [isLoading,setIsloading] = useState(true)
-  
+  const [inputData,SetInputData] = useState('')
+  const [isOpenCategoryDialog,setIsOpenCategoryDialog]= useState(false)
+
+
+  const changeHandler = (e)=>{
+    SetInputData(e.target.value)
+  }
 
   const  addCategoryHandler = ()=>{
 
+    console.log(inputData);
+
+    // axios.post('api/menu').then((res)=>{
+    //     console.log(res);
+    // })
+
   }
+
+ const toggleHandler = ()=>{
+   isOpenCategoryDialog ? setIsOpenCategoryDialog (false) : setIsOpenCategoryDialog (true)
+   
+ }
+
+  
 
   return (
     <div className=' w-screen h-screen flex flex-col justify-start items-center pt-3 bg-orange-300 text-white'>
       ferdowsi cafe
 
-      <div onClick={()=>addCategoryHandler()}  className=" bg-slate-800 rounded-xl p-2 mb-3 mt-3 " > 
+      <div onClick={()=>toggleHandler()}  className=" bg-slate-800 rounded-xl p-2 mb-3 mt-3 " > 
       اضافه کردن دسته بندی جدید +
       </div>
      
@@ -76,7 +96,33 @@ export default function Home() {
                     </p>
                 </AccordionItemPanel>
             </AccordionItem>
-        </Accordion>
+      </Accordion>
+
+
+
+<div onClick={()=>toggleHandler()} className={`h-screen w-screen bg-black/50 flex justify-center items-center top-0 left-0 
+${isOpenCategoryDialog ? "fixed" : "hidden" } z-10` }>
+<div onClick={(e)=>e.stopPropagation()}  className=" flex flex-col justify-center items-center rounded-lg absolute top-[50%] left[50%] w-[90%]  pt-5 pb-5 max-w-lg bg-gray-700" >
+ <div  className="w-full flex flex-col justify-center items-center h-full" >
+             <div className="w-full flex flex-col justify-center items-end p-2">
+                <label className="" >  .نام دسته بندی را وارد کنید</label>
+                <input onChange={(e)=>changeHandler(e)} className=" w-full mt-2 bg-white text-black "></input>
+             </div>
+
+             <div onClick={()=>addCategoryHandler()} className=" text-center w-[90%] bg-slate-800 rounded-xl p-2  mt-3 " > 
+                 ذخیره
+            </div>
+            <div onClick={()=>toggleHandler()} className=" text-center w-[90%] bg-slate-800 rounded-xl p-2 mb-3 mt-3 " > 
+                 انصراف
+            </div>
+
+        </div>
+
+ </div>
+   </div>
+
+ 
+        
 
     </div>
   )
