@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionItem,
@@ -18,10 +18,28 @@ export default function Home() {
   
   
 
-  const [data,setData] = useState('')
+  const [menuData,setMenuData] = useState('')
+  const [isEmptyCategory,setIsEmptyCategory]=useState(true)
   const [isLoading,setIsloading] = useState(true)
   const [inputData,SetInputData] = useState('')
   const [isOpenCategoryDialog,setIsOpenCategoryDialog]= useState(false)
+
+
+
+  useEffect(()=>{
+    axios.get('api/menu/').then((res)=>{
+      console.log(res.data);
+      setMenuData(res.data.menu)
+      setIsloading(false)
+      if (!res.data.menu ){
+        setIsEmptyCategory(true)
+      } else {
+        setIsEmptyCategory(false)
+      }
+    })
+  },[])
+
+  
 
 
   const changeHandler = (e)=>{
@@ -31,10 +49,10 @@ export default function Home() {
   const  addCategoryHandler = ()=>{
 
     console.log(inputData);
-
-    // axios.post('api/menu').then((res)=>{
-    //     console.log(res);
-    // })
+    
+    axios.post('api/menu/', {inputData}).then((res)=>{
+        console.log(res.data.menu);
+    })
 
   }
 
@@ -42,6 +60,13 @@ export default function Home() {
    isOpenCategoryDialog ? setIsOpenCategoryDialog (false) : setIsOpenCategoryDialog (true)
    
  }
+
+
+ if (isLoading){
+  return <div> loading . . .</div>
+ }
+
+
 
   
 
@@ -54,34 +79,55 @@ export default function Home() {
       </div>
      
       <Accordion allowMultipleExpanded ={true} className=" transition-all w-full max-w-lg " >
-            <AccordionItem>
-                <AccordionItemHeading>
-                    <AccordionItemButton className="bg-white rounded-lg flex justify-center items-center m-2 p-1 pb-2" >
-                    <h1 className="text-orange-950" >نوشیدنی های بر پایه قهوه</h1>
-                    </AccordionItemButton>
-                </AccordionItemHeading>
-                <AccordionItemPanel>
-                <div className=" bg-orange-300 flex w-Full flex-col items-center justify-start " >
-                   <div className="  flex flex-col items-center justify-start  h-full w-full bg-amber-950  " >
-                     
-                       
-                         <div  className="flex w-[90%] bg-orange-900 rounded-lg m-2 justify-between items-center p-2 " >
-                            <h3 className="  w-[50px]" >20000</h3> 
-                            <div className="  ">
-                             <button onClick={()=>deleteHAndler()} >
-                              <DeleteSVG />
-                            </button>
-                           <button onClick={()=>editHandler()} >
-                              <EditSVG/>
-                           </button>
-                         </div>
-                        <h3 className="  w-[70px] flex justify-end" >name</h3> 
-                        </div>
-          
+
+
+        {isEmptyCategory ? 
+        
+        <div> empty category </div> :
+
+        menuData.map((category)=>{
+          return <AccordionItem key={category.id} >
+          <AccordionItemHeading>
+              <AccordionItemButton className="bg-white rounded-lg flex justify-center items-center m-2 p-1 pb-2" >
+             
+              <div className="text-orange-950 w-full flex justify-between items-center "  > 
+              <button onClick={()=>deleteHAndler()} >
+                        <DeleteSVG />
+              </button>
+               {category.title}
+               </div>
+             
+              </AccordionItemButton>
+          </AccordionItemHeading>
+          <AccordionItemPanel>
+          <div className=" bg-orange-300 flex w-Full flex-col items-center justify-start " >
+             <div className="  flex flex-col items-center justify-start  h-full w-full bg-amber-950  " >
+               
+                 
+                   <div  className="flex w-[90%] bg-orange-900 rounded-lg m-2 justify-between items-center p-2 " >
+                      <h3 className="  w-[50px]" >20000</h3> 
+                      <div className="  ">
+                       <button onClick={()=>deleteHAndler()} >
+                        <DeleteSVG />
+                      </button>
+                     <button onClick={()=>editHandler()} >
+                        <EditSVG/>
+                     </button>
+                   </div>
+                  <h3 className="  w-[70px] flex justify-end" >name</h3> 
                   </div>
-            </div> 
-                </AccordionItemPanel>
-            </AccordionItem>
+    
+            </div>
+      </div> 
+          </AccordionItemPanel>
+      </AccordionItem>
+        })
+        
+      }
+
+            
+
+
             <AccordionItem>
                 <AccordionItemHeading>
                     <AccordionItemButton className="bg-white rounded-lg flex justify-center items-center m-2 p-1 pb-2">
@@ -97,9 +143,6 @@ export default function Home() {
                 </AccordionItemPanel>
             </AccordionItem>
       </Accordion>
-
-
-
 <div onClick={()=>toggleHandler()} className={`h-screen w-screen bg-black/50 flex justify-center items-center top-0 left-0 
 ${isOpenCategoryDialog ? "fixed" : "hidden" } z-10` }>
 <div onClick={(e)=>e.stopPropagation()}  className=" flex flex-col justify-center items-center rounded-lg absolute top-[50%] left[50%] w-[90%]  pt-5 pb-5 max-w-lg bg-gray-700" >

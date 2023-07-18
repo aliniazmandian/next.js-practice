@@ -4,9 +4,19 @@ import mongoose from "mongoose";
 const menuSchema = new mongoose.Schema({
     title : {
         type : String ,
-        unique :true ,
         required : true
     },
+    items :[
+        {
+            title:{
+                type:String
+            },
+            price:{
+                type :String
+            }
+        }
+    ]
+    
 
 });
 
