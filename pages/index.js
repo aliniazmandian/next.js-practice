@@ -28,7 +28,7 @@ export default function Home() {
 
   useEffect(()=>{
     axios.get('api/menu/').then((res)=>{
-      console.log(res.data);
+      console.log(res.data.menu);
       setMenuData(res.data.menu)
       setIsloading(false)
       if (!res.data.menu ){
@@ -85,8 +85,8 @@ export default function Home() {
         
         <div> empty category </div> :
 
-        menuData.map((category)=>{
-          return <AccordionItem key={category.id} >
+        menuData.map((category,index)=>{
+          return <AccordionItem key={category._id} >
           <AccordionItemHeading>
               <AccordionItemButton className="bg-white rounded-lg flex justify-center items-center m-2 p-1 pb-2" >
              
@@ -99,49 +99,44 @@ export default function Home() {
              
               </AccordionItemButton>
           </AccordionItemHeading>
-          <AccordionItemPanel>
-          <div className=" bg-orange-300 flex w-Full flex-col items-center justify-start " >
-             <div className="  flex flex-col items-center justify-start  h-full w-full bg-amber-950  " >
-               
-                 
-                   <div  className="flex w-[90%] bg-orange-900 rounded-lg m-2 justify-between items-center p-2 " >
-                      <h3 className="  w-[50px]" >20000</h3> 
-                      <div className="  ">
-                       <button onClick={()=>deleteHAndler()} >
-                        <DeleteSVG />
-                      </button>
-                     <button onClick={()=>editHandler()} >
-                        <EditSVG/>
-                     </button>
-                   </div>
-                  <h3 className="  w-[70px] flex justify-end" >name</h3> 
-                  </div>
-    
-            </div>
-      </div> 
-          </AccordionItemPanel>
+
+          { menuData[index].items.length === 0  ? <AccordionItemPanel > آبتمی وارد نشده  </AccordionItemPanel> : 
+          
+
+          menuData[index].items.map((item)=>{
+            return <AccordionItemPanel key={item._id}>
+  
+            <div  className=" bg-orange-300 flex w-Full flex-col items-center justify-start " >
+               <div className="  flex flex-col items-center justify-start  h-full w-full bg-amber-950  " >
+                     <div  className="flex w-[90%] bg-orange-900 rounded-lg m-2 justify-between items-center p-2 " >
+                        <h3 className="  w-[50px]" >{item.price}</h3> 
+                        <div className="  ">
+                         <button onClick={()=>deleteHAndler()} >
+                          <DeleteSVG />
+                        </button>
+                       <button onClick={()=>editHandler()} >
+                          <EditSVG/>
+                       </button>
+                     </div>
+                    <h3 className="  w-[70px] flex justify-end" >{item.title}</h3> 
+                    </div>
+              </div>
+        </div> 
+  
+            </AccordionItemPanel>
+          })
+          
+          }
+
+       
+          
+
+
       </AccordionItem>
         })
         
       }
 
-            
-
-
-            <AccordionItem>
-                <AccordionItemHeading>
-                    <AccordionItemButton className="bg-white rounded-lg flex justify-center items-center m-2 p-1 pb-2">
-                        Is free will real or just an illusion?  +
-                    </AccordionItemButton>
-                </AccordionItemHeading>
-                <AccordionItemPanel>
-                    <p>
-                        In ad velit in ex nostrud dolore cupidatat consectetur
-                        ea in ut nostrud velit in irure cillum tempor laboris
-                        sed adipisicing eu esse duis nulla non.
-                    </p>
-                </AccordionItemPanel>
-            </AccordionItem>
       </Accordion>
 <div onClick={()=>toggleHandler()} className={`h-screen w-screen bg-black/50 flex justify-center items-center top-0 left-0 
 ${isOpenCategoryDialog ? "fixed" : "hidden" } z-10` }>

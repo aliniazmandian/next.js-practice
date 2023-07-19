@@ -9,15 +9,16 @@ import Menu from "../../../server/models/menu"
 export default async function handler(req, res) {
 
   dbConnect()
+
   const {method , body } = req
-  if (req.method === 'POST'){
+  if (method === 'POST'){
     const {inputData} = body
 
-    await Menu.create({title : inputData , items: [{title: "a" , price: "200"}]})
+    await Menu.create({title : inputData , items: []})
 
     const menu = await Menu.find({})
     return res.status(201).json({message:'new Item added' , menu})
-  }  else if (req.method === "GET"){
+  }  else if (method === "GET"){
 
     const menu = await Menu.find({})
 
