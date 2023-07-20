@@ -39,8 +39,6 @@ export default function Home() {
     })
   },[])
 
-  
-
 
   const changeHandler = (e)=>{
     SetInputData(e.target.value)
@@ -61,20 +59,40 @@ export default function Home() {
    
  }
 
+const deleteCategoryHandler=(categoryId)=>{
+ 
+  console.log("delete ,category id: ",  categoryId);
+}
+
+const editCategoryHandler=(categoryId)=>{
+  console.log("edit ,category id: ", categoryId);
+}
+
+const deleteItemHandler= (itemId)=>{
+console.log("delete, item id :",itemId);
+}
+
+const editItemHandler=(itemId)=>{
+  console.log("edite, item id :",itemId);
+}
+
+
+
+
+
+
+
+
 
  if (isLoading){
   return <div> loading . . .</div>
  }
 
-
-
-  
-
   return (
     <div className=' w-screen h-screen flex flex-col justify-start items-center pt-3 bg-orange-300 text-white'>
       ferdowsi cafe
 
-      <div onClick={()=>toggleHandler()}  className=" bg-slate-800 rounded-xl p-2 mb-3 mt-3 " > 
+      <div onClick={()=>toggleHandler()}  className=" bg-slate-800 rounded-xl p-2 mb-3 mt-3 cursor-pointer " > 
       اضافه کردن دسته بندی جدید +
       </div>
      
@@ -89,13 +107,25 @@ export default function Home() {
           return <AccordionItem key={category._id} >
           <AccordionItemHeading>
               <AccordionItemButton className="bg-white rounded-lg flex justify-center items-center m-2 p-1 pb-2" >
-             
-              <div className="text-orange-950 w-full flex justify-between items-center "  > 
-              <button onClick={()=>deleteHAndler()} >
-                        <DeleteSVG />
-              </button>
+
+
+                <div onClick={(e)=>{e.stopPropagation(e)}}  className="text-orange-950 " >
+                  <button className="p-1 mr-2 border-2 rounded-xl border-black " onClick={()=>deleteCategoryHandler(category._id)} >
+                     <DeleteSVG  />
+                  </button>
+                </div>
+
+                <div onClick={(e)=>{e.stopPropagation(e)}}  className="text-orange-950 " >
+                  <button className="p-1  border-2 rounded-xl border-black " onClick={()=>editCategoryHandler(category._id)} >
+                     <EditSVG/>
+                  </button>
+                </div>
+              
+              <div className="text-orange-950 select-none w-full flex justify-end items-center "  > 
                {category.title}
                </div>
+
+               
              
               </AccordionItemButton>
           </AccordionItemHeading>
@@ -107,14 +137,14 @@ export default function Home() {
             return <AccordionItemPanel key={item._id}>
   
             <div  className=" bg-orange-300 flex w-Full flex-col items-center justify-start " >
-               <div className="  flex flex-col items-center justify-start  h-full w-full bg-amber-950  " >
+               <div className=" select-none flex flex-col items-center justify-start  h-full w-full bg-amber-950  " >
                      <div  className="flex w-[90%] bg-orange-900 rounded-lg m-2 justify-between items-center p-2 " >
                         <h3 className="  w-[50px]" >{item.price}</h3> 
                         <div className="  ">
-                         <button onClick={()=>deleteHAndler()} >
-                          <DeleteSVG />
+                         <button className="rounded-xl border-2 p-1 mr-2" onClick={()=>deleteItemHandler(item._id)}   >
+                          <DeleteSVG  />
                         </button>
-                       <button onClick={()=>editHandler()} >
+                       <button  className="rounded-xl border-2 p-1 mr-2" onClick={()=>editItemHandler(item._id)} >
                           <EditSVG/>
                        </button>
                      </div>
