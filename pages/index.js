@@ -62,14 +62,20 @@ export default function Home() {
 const deleteCategoryHandler=(categoryId)=>{
  
   console.log("delete ,category id: ",  categoryId);
+  axios.delete(`api/menu/${categoryId}`).then((res)=>{
+    setMenuData(res.data.menu)
+  })
 }
 
 const editCategoryHandler=(categoryId)=>{
   console.log("edit ,category id: ", categoryId);
 }
 
-const deleteItemHandler= (itemId)=>{
-console.log("delete, item id :",itemId);
+const deleteItemHandler= (itemId , categoryId)=>{
+console.log("delete, item id :",itemId , categoryId  );
+
+
+
 }
 
 const editItemHandler=(itemId)=>{
@@ -141,10 +147,10 @@ const editItemHandler=(itemId)=>{
                      <div  className="flex w-[90%] bg-orange-900 rounded-lg m-2 justify-between items-center p-2 " >
                         <h3 className="  w-[50px]" >{item.price}</h3> 
                         <div className="  ">
-                         <button className="rounded-xl border-2 p-1 mr-2" onClick={()=>deleteItemHandler(item._id)}   >
+                         <button className="rounded-xl border-2 p-1 mr-2" onClick={()=>deleteItemHandler(item._id,category._id )}   >
                           <DeleteSVG  />
                         </button>
-                       <button  className="rounded-xl border-2 p-1 mr-2" onClick={()=>editItemHandler(item._id)} >
+                       <button  className="rounded-xl border-2 p-1 mr-2" onClick={()=>editItemHandler(item._id,index)} >
                           <EditSVG/>
                        </button>
                      </div>

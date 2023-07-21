@@ -1,12 +1,19 @@
 
+import dbConnect from "../../../server/utils/dbConnect"
+import Menu from "../../../server/models/menu"
 
-import { coffes } from "../../../data/coffes"
+export default async function handler(req, res) {
+    
+    dbConnect()
 
-export default function handler(req, res) {
-    const {coffeId} = req.query
+
+    const {menuId} = req.query
+  
     if (req.method === "DELETE"){
-        const index = coffes.findIndex((coffe)=>coffe.id === parseInt(coffeId))
-        coffes.splice(index,1) 
+       await  Menu.findByIdAndDelete(menuId)
+       const menu = await Menu.find({})
+       return  res.status(200).json({message: "item deleted !", menu } )
     }
-    return res.status(200).json({message: "item deleted !", coffes } )
+   
+   
 }
