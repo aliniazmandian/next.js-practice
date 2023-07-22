@@ -74,6 +74,9 @@ const editCategoryHandler=(categoryId)=>{
 const deleteItemHandler= (itemId , categoryId)=>{
 console.log("delete, item id :",itemId , categoryId  );
 
+axios.delete(`api/menu/item/${itemId}?categoryId=${categoryId}`).then((res)=>{
+  console.log(res);
+})
 
 
 }
