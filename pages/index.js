@@ -44,6 +44,20 @@ export default function Home() {
   },[])
 
 
+  const getData=()=>{
+    axios.get('api/menu/').then((res)=>{
+      console.log(res.data.menu);
+      setMenuData(res.data.menu)
+      setIsloading(false)
+      if (!res.data.menu ){
+        setIsEmptyCategory(true)
+      } else {
+        setIsEmptyCategory(false)
+      }
+    })
+  }
+
+
   const changeHandler = (e)=>{
     SetInputData(e.target.value)
   }
@@ -63,7 +77,7 @@ export default function Home() {
     console.log(inputData);
     
     axios.post('api/menu/', {inputData}).then((res)=>{
-        console.log(res.data.menu);
+      setMenuData(res.data.menu)
     })
 
   }
@@ -74,11 +88,11 @@ export default function Home() {
       itemInputData,
        priceInputData
     }
-
+    setIsloading(true)
     axios.put(`api/menu/item/${addData.categoryId}`,{addData}).then((res)=>{
 
-      console.log(res.data.menu);
-
+     
+    getData()
     })
 
   }
@@ -136,14 +150,14 @@ const editItemHandler=(itemId)=>{
  }
 
   return (
-    <div className=' w-screen h-screen flex flex-col justify-start items-center pt-3 bg-orange-300 text-white'>
+    <div className=' w-screen h-screen overflow-hidden flex flex-col justify-start items-center pt-3 bg-orange-300 text-white'>
       ferdowsi cafe
 
       <div onClick={()=>toggleHandler()}  className=" bg-zinc-700 rounded-xl p-2 mb-3 mt-3 cursor-pointer " > 
       اضافه کردن دسته بندی جدید +
       </div>
      
-      <Accordion allowMultipleExpanded ={true} className=" transition-all w-full max-w-lg " >
+      <Accordion allowMultipleExpanded ={true} className=" overflow-auto transition-all w-full max-w-lg " >
 
 
         {isEmptyCategory ? 
@@ -175,25 +189,27 @@ const editItemHandler=(itemId)=>{
                
              
               </AccordionItemButton>
+             
           </AccordionItemHeading >
 
+                 <div onClick={()=>toggleItemDialogHandler(category._id)} className=" cursor-pointer w-[150px] bg-zinc-700 text-center rounded-xl p-1 mb-1" >
+                اضافه کردن آیتم +
+                </div>
           { menuData[index].items.length === 0  ?
            <AccordionItemPanel className="border-2 p-1 text-center w-[95%] rounded-lg  " >
              آبتمی وارد نشده 
-             <div onClick={()=>toggleItemDialogHandler(category._id)} className=" cursor-pointer w-[150px] bg-zinc-700 text-center rounded-xl p-1 mt-1" >
-                اضافه کردن آیتم +
-                </div>
+             
               </AccordionItemPanel>
            
            : 
           
 
           menuData[index].items.map((item)=>{
-            return <AccordionItemPanel key={item._id}>
+            return <AccordionItemPanel className="border-2 p-1 text-center w-[95%] rounded-lg  " key={item._id}>
   
-            <div  className=" bg-orange-300 flex w-Full flex-col items-center justify-start " >
-               <div className=" select-none flex flex-col items-center justify-start  h-full w-full bg-amber-950  " >
-                     <div  className="flex w-[90%] bg-orange-900 rounded-lg m-2 justify-between items-center p-2 " >
+            <div  className="  flex w-Full flex-col items-center justify-start " >
+               <div className=" select-none flex flex-col items-center justify-start  h-full w-full  " >
+                     <div  className="flex w-[90%] rounded-lg m-2 justify-between items-center p-2 " >
                         <h3 className="  w-[50px]" >{item.price}</h3> 
                         <div className="  ">
                          <button className="rounded-xl border-2 p-1 mr-2" onClick={()=>deleteItemHandler(item._id,category._id )}   >
@@ -207,7 +223,7 @@ const editItemHandler=(itemId)=>{
                     </div>
               </div>
         </div> 
-        <div className="w-full bg-zinc-700 text-center rounded-xl p-1 mt-1" > + اضافه کردن آیتم </div>
+        
             </AccordionItemPanel>
           })
           
