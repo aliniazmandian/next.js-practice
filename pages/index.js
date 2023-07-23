@@ -26,6 +26,7 @@ export default function Home() {
   const [isOpenAddItemDialog,setIsOpenAddItemDialog] = useState(false)
   const [priceInputData,setPriceInputData]=useState('')
   const [itemInputData,setItemInputData]=useState('')
+  const [categoryIdFotAddItem,setCategoryIdForAddItem]=useState('')
 
 
 
@@ -49,6 +50,7 @@ export default function Home() {
 
   const priceData = (e) =>{
     setPriceInputData(e.target.value)
+    
   }
 
   const itemData = (e) =>{
@@ -66,14 +68,34 @@ export default function Home() {
 
   }
 
+  const addItemHandler = ( ) =>{
+    const addData = {
+      categoryId : categoryIdFotAddItem,
+      itemInputData,
+       priceInputData
+    }
+
+    axios.put(`api/menu/item/${addData.categoryId}`,{addData}).then((res)=>{
+
+      console.log(res.data.menu);
+
+    })
+
+  }
+
  const toggleHandler = ()=>{
    isOpenCategoryDialog ? setIsOpenCategoryDialog (false) : setIsOpenCategoryDialog (true)
    
  }
 
 
-const toggleItemDialogHandler = () => {
+const toggleItemDialogHandler = (categoryId) => {
   isOpenAddItemDialog ? setIsOpenAddItemDialog(false) : setIsOpenAddItemDialog(true)
+  if (categoryId) {
+    setCategoryIdForAddItem(categoryId)
+  }else{
+    setCategoryIdForAddItem("")
+  }
 }
 
 const deleteCategoryHandler=(categoryId)=>{
@@ -93,6 +115,7 @@ console.log("delete, item id :",itemId , categoryId  );
 
 axios.delete(`api/menu/item/${itemId}?categoryId=${categoryId}`).then((res)=>{
   console.log(res.data.menu);
+  setMenuData(res.data.menu)
 })
 
 
@@ -157,7 +180,9 @@ const editItemHandler=(itemId)=>{
           { menuData[index].items.length === 0  ?
            <AccordionItemPanel className="border-2 p-1 text-center w-[95%] rounded-lg  " >
              آبتمی وارد نشده 
-             <div onClick={()=>toggleItemDialogHandler()} className=" cursor-pointer w-[150px] bg-zinc-700 text-center rounded-xl p-1 mt-1" >  اضافه کردن آیتم +</div>
+             <div onClick={()=>toggleItemDialogHandler(category._id)} className=" cursor-pointer w-[150px] bg-zinc-700 text-center rounded-xl p-1 mt-1" >
+                اضافه کردن آیتم +
+                </div>
               </AccordionItemPanel>
            
            : 
@@ -234,7 +259,7 @@ const editItemHandler=(itemId)=>{
                 <input onChange={(e)=>priceData(e)} className=" w-full mt-2 bg-white text-black "></input>
              </div>
 
-             <div onClick={()=>addCategoryHandler()} className=" text-center w-[90%] bg-slate-800 rounded-xl p-2  mt-3 " > 
+             <div onClick={()=>addItemHandler()} className=" text-center w-[90%] bg-slate-800 rounded-xl p-2  mt-3 " > 
                  ذخیره
             </div>
             <div onClick={()=>toggleItemDialogHandler()} className=" text-center w-[90%] bg-slate-800 rounded-xl p-2 mb-3 mt-3 " > 

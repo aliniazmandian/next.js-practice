@@ -1,5 +1,6 @@
 import dbConnect from "../../../../server/utils/dbConnect";
 import Menu from "../../../../server/models/menu";
+import { now } from "mongoose";
 
 
 export default async function handler(req,res){
@@ -18,6 +19,21 @@ export default async function handler(req,res){
 
      await menu.save()
      return  res.status(200).json({message: "item deleted !", menu } )
+    }else if( req.method === "PUT"){
+
+        console.log(req.body.addData , req.query);
+
+        const   menu = await Menu.findById(req.query.itemId)
+        menu.items.push({
+            // _id : Date(now),
+            title : req.body.addData.itemInputData,
+            price: req.body.addData.priceInputData,
+        })
+
+        console.log(menu);
+        await menu.save()
+        return  res.status(200).json({message: "item added !", menu } )
+
     }
 
 
