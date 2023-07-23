@@ -17,7 +17,7 @@ export default async function handler(req,res){
      menu.items.splice(index,1)
 
      await menu.save()
-     
+     return  res.status(200).json({message: "item deleted !", menu } )
     }
 
 

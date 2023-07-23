@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     if (req.method === "DELETE"){
        await  Menu.findByIdAndDelete(menuId)
        const menu = await Menu.find({})
-       return  res.status(200).json({message: "item deleted !", menu } )
+       return  res.status(200).json({message: "category deleted !", menu } )
     }
    
    
