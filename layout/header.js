@@ -3,23 +3,23 @@ import React from 'react'
 
 function Header() {
   return (
-    <div className='bg-orange-300 shadow-xl fixed w-screen overflow-visible' >
+    <div className='bg-orange-300 p-3 shadow-xl fixed w-screen overflow-visible' >
 
 
-        <Link className='' href={""} >
-        <a> Sign in  </a>
+        <Link  href={"/sign-in"} >
+        <a className='p-3'> Sign in  </a>
         </Link>
 
-        <Link href={""} >
-        <a> Sign out  </a>
+        <Link href={"/sign-out"} >
+        <a className='p-3'> Sign out  </a>
         </Link>
 
-        <Link href={""} >
-        <a> Profile  </a>
+        <Link href={"/profile"} >
+        <a className='p-3'> Profile  </a>
         </Link>
 
-        <Link href={""} >
-        <a> Menu  </a>
+        <Link href={"/"} >
+        <a className='p-3'> Menu  </a>
         </Link>
 
     </div>
