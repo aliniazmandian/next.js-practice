@@ -10,6 +10,7 @@ import {
 import DeleteSVG from "../components/deleteSVG";
 import EditSVG from "../components/editSVG";
 import axios from "axios";
+import Layout from "../layout/layout";
 
 
 
@@ -150,8 +151,9 @@ const editItemHandler=(itemId)=>{
  }
 
   return (
-    <div className=' w-screen h-screen overflow-hidden flex flex-col justify-start items-center pt-3 bg-orange-300 text-white'>
-      ferdowsi cafe
+<Layout>
+<div className=' w-screen h-screen overflow-hidden flex flex-col justify-start items-center pt-3 bg-orange-300 text-white'>
+       <div className="mt-3">ferdowsi cafe</div> 
 
       <div onClick={()=>toggleHandler()}  className=" bg-zinc-700 rounded-xl p-2 mb-3 mt-3 cursor-pointer " > 
       اضافه کردن دسته بندی جدید +
@@ -288,5 +290,9 @@ const editItemHandler=(itemId)=>{
    </div>
 
     </div>
+</Layout>
+    
+
+    
   )
 }
