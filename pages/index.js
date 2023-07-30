@@ -147,7 +147,8 @@ const editItemHandler=(itemId)=>{
 
 
  if (isLoading){
-  return <div> loading . . .</div>
+
+  return <Layout> <div className="pt-12" > loading . . .</div></Layout>
  }
 
   return (
