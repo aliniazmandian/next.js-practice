@@ -1,18 +1,19 @@
 import Link from 'next/link'
 import React from 'react'
-
+import {signIn,signOut } from 'next-auth/react'
+ 
 function Header() {
   return (
     <div className='bg-orange-300 p-3 shadow-xl fixed w-screen overflow-visible' >
 
 
-        <Link  href={"/sign-in"} >
-        <a className='p-3'> Sign in  </a>
-        </Link>
+       <button className='pr-3'  onClick={()=>signIn('github')} >
+        Sign in
+       </button>
 
-        <Link href={"/sign-out"} >
-        <a className='p-3'> Sign out  </a>
-        </Link>
+       <button className='' onClick={()=>signOut()} >
+        Sign out
+       </button>
 
         <Link href={"/profile"} >
         <a className='p-3'> Profile  </a>
